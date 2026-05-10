@@ -20,20 +20,21 @@ for link in links:
     if not href:
         continue
 
-    # 確認用ログ
-    print(href)
-
     # booking-form のリンクだけ見る
     if "booking-form" not in href:
         continue
 
-    # 八ﾄﾓ1名 (6001)
+    # 八ﾄﾓ1名
     if "6001" not in href:
         continue
 
     # 9/2
-    if "1788307200" in href:
-        found = True
+    if "1788307200" not in href:
+        continue
+
+    # 条件一致
+    found = True
+    print("発見:", href)
 
 
 if found:

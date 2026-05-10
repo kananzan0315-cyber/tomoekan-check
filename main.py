@@ -10,7 +10,7 @@ soup = BeautifulSoup(html, "html.parser")
 
 links = soup.find_all("a")
 
-found = False
+found = []
 
 for link in links:
 
@@ -29,7 +29,15 @@ for link in links:
 
     # 8/22
     if "1787356800" in href:
-        found = True
+        found.append("8/22")
+
+    # 8/29
+    if "1787961600" in href:
+        found.append("8/29")
+
+    # 9/5
+    if "1788566400" in href:
+        found.append("9/5")
 
 
 if found:
@@ -42,12 +50,14 @@ if found:
         "Authorization": f"Bearer {line_token}"
     }
 
+    message = "八ﾄﾓ4名 空きあり！\n\n" + "\n".join(found)
+
     data = {
         "to": user_id,
         "messages": [
             {
                 "type": "text",
-                "text": "8/22 八ﾄﾓ4名に空きあり！"
+                "text": message
             }
         ]
     }

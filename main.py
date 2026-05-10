@@ -2,7 +2,8 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://tomoekan.com/8tomoekan-calender/?ct=1788220800"
+# 9月カレンダー
+url = "https://tomoekan.com/8tomoekan-calender/?ct=1788134400"
 
 html = requests.get(url).text
 
@@ -18,6 +19,9 @@ for link in links:
 
     if not href:
         continue
+
+    # 確認用ログ
+    print(href)
 
     # booking-form のリンクだけ見る
     if "booking-form" not in href:

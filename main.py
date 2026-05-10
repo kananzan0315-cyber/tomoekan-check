@@ -1,11 +1,38 @@
 import os
 import requests
+from bs4 import BeautifulSoup
 
-url = "https://tomoekan.com/8tomoekan-calender/"
+url = "https://tomoekan.com/8tomoekan-calender/?ct=1785542400"
 
-text = requests.get(url).text
+html = requests.get(url).text
 
-if "八ﾄﾓ4名" in text and "〇" in text:
+soup = BeautifulSoup(html, "html.parser")
+
+links = soup.find_all("a")
+
+found = False
+
+for link in links:
+
+    href = link.get("href")
+
+    if not href:
+        continue
+
+    # booking-form のリンクだけ見る
+    if "booking-form" not in href:
+        continue
+
+    # 八ﾄﾓ4名 (6005)
+    if "6005" not in href:
+        continue
+
+    # 8/22
+    if "1787356800" in href:
+        found = True
+
+
+if found:
 
     line_token = os.environ["LINE_TOKEN"]
     user_id = os.environ["USER_ID"]
@@ -20,7 +47,7 @@ if "八ﾄﾓ4名" in text and "〇" in text:
         "messages": [
             {
                 "type": "text",
-                "text": "トモエ館に空きあり！"
+                "text": "8/22 八ﾄﾓ4名に空きあり！"
             }
         ]
     }

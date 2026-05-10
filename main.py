@@ -2,7 +2,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://tomoekan.com/8tomoekan-calender/?ct=1785542400"
+url = "https://tomoekan.com/8tomoekan-calender/?ct=1788220800"
 
 html = requests.get(url).text
 
@@ -10,7 +10,7 @@ soup = BeautifulSoup(html, "html.parser")
 
 links = soup.find_all("a")
 
-found = []
+found = False
 
 for link in links:
 
@@ -23,21 +23,13 @@ for link in links:
     if "booking-form" not in href:
         continue
 
-    # 八ﾄﾓ4名 (6005)
-    if "6005" not in href:
+    # 八ﾄﾓ1名 (6001)
+    if "6001" not in href:
         continue
 
-    # 8/22
-    if "1787356800" in href:
-        found.append("8/22")
-
-    # 8/29
-    if "1787961600" in href:
-        found.append("8/29")
-
-    # 9/5
-    if "1788566400" in href:
-        found.append("9/5")
+    # 9/2
+    if "1788307200" in href:
+        found = True
 
 
 if found:
@@ -50,14 +42,12 @@ if found:
         "Authorization": f"Bearer {line_token}"
     }
 
-    message = "八ﾄﾓ4名 空きあり！\n\n" + "\n".join(found)
-
     data = {
         "to": user_id,
         "messages": [
             {
                 "type": "text",
-                "text": message
+                "text": "9/2 八ﾄﾓ1名に空きあり！"
             }
         ]
     }
